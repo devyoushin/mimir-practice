@@ -1,0 +1,282 @@
+# mimir-distributed Helm values — HA 구성 (운영 환경용)
+# Zone-aware replication + 고가용성 설정
+# 사용 전 S3 버킷 이름, 리전, IRSA ARN을 수정하세요.
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::<ACCOUNT_ID>:role/mimir-irsa-role
+
+mimir:
+  structuredConfig:
+    multitenancy_enabled: true
+
+    common:
+      storage:
+        backend: s3
+        s3:
+          region: ap-northeast-2
+
+    blocks_storage:
+      s3:
+        bucket_name: my-mimir-blocks
+      tsdb:
+        retention_period: 13h    # Ingester WAL 보존 시간보다 길게
+
+    ruler_storage:
+      s3:
+        bucket_name: my-mimir-ruler
+
+    ruler:
+      enable_api: true
+      ring:
+        replication_factor: 3
+
+    alertmanager_storage:
+      s3:
+        bucket_name: my-mimir-alertmanager
+
+    alertmanager:
+      enable_api: true
+      sharding_enabled: true
+      sharding_ring:
+        replication_factor: 3
+      external_url: http://mimir-nginx.monitoring.svc.cluster.local/alertmanager
+
+    ingester:
+      ring:
+        zone_awareness_enabled: true
+        replication_factor: 3
+        # 재시작 시 인메모리 데이터를 다른 Ingester로 핸드오프
+        final_sleep: 0s
+      instance_interface_names:
+        - eth0
+
+    store_gateway:
+      sharding_ring:
+        zone_awareness_enabled: true
+        replication_factor: 3
+
+    distributor:
+      ring:
+        instance_interface_names:
+          - eth0
+
+    query_frontend:
+      parallelize_shardable_queries: true
+      query_sharding_total_shards: 16
+
+    query_range:
+      cache_results: true
+      results_cache:
+        backend: memcached
+        memcached:
+          addresses: dns+mimir-memcached.monitoring.svc:11211
+
+    limits:
+      ingestion_rate: 30000
+      ingestion_burst_size: 500000
+      max_label_names_per_series: 30
+      max_global_series_per_user: 3000000
+      compactor_blocks_retention_period: 90d
+      # 쿼리 보호
+      max_query_parallelism: 32
+      max_cache_freshness: 10m
+
+    compactor:
+      block_ranges:
+        - 2h
+        - 12h
+        - 24h
+        - 48h
+      sharding_enabled: true
+      ring:
+        kvstore:
+          store: memberlist
+      cleanup_interval: 15m
+      max_opening_blocks_concurrency: 4
+      max_closing_blocks_concurrency: 2
+
+# ─────────────────────────────────────────────
+# Distributor — Stateless, 자유롭게 확장
+# ─────────────────────────────────────────────
+distributor:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 2
+      memory: 2Gi
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/component: distributor
+
+# ─────────────────────────────────────────────
+# Ingester — Zone-aware, AZ당 2개 (총 6개)
+# ─────────────────────────────────────────────
+ingester:
+  zoneAwareReplication:
+    enabled: true
+    zones:
+      - name: zone-a
+        nodeSelector:
+          topology.kubernetes.io/zone: ap-northeast-2a
+      - name: zone-b
+        nodeSelector:
+          topology.kubernetes.io/zone: ap-northeast-2b
+      - name: zone-c
+        nodeSelector:
+          topology.kubernetes.io/zone: ap-northeast-2c
+  replicas: 2    # AZ당 2개 = 총 6개 (zone-aware이면 각 zone에 2개)
+  resources:
+    requests:
+      cpu: 1
+      memory: 4Gi
+    limits:
+      cpu: 4
+      memory: 8Gi
+  persistentVolume:
+    enabled: true
+    size: 50Gi
+    storageClass: gp3
+
+# ─────────────────────────────────────────────
+# Querier — Stateless
+# ─────────────────────────────────────────────
+querier:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 2
+      memory: 4Gi
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/component: querier
+
+# ─────────────────────────────────────────────
+# Query Frontend — Stateless
+# ─────────────────────────────────────────────
+query_frontend:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 2
+      memory: 2Gi
+
+# ─────────────────────────────────────────────
+# Store Gateway — Zone-aware, AZ당 1개 (총 3개)
+# ─────────────────────────────────────────────
+store_gateway:
+  zoneAwareReplication:
+    enabled: true
+    zones:
+      - name: zone-a
+        nodeSelector:
+          topology.kubernetes.io/zone: ap-northeast-2a
+      - name: zone-b
+        nodeSelector:
+          topology.kubernetes.io/zone: ap-northeast-2b
+      - name: zone-c
+        nodeSelector:
+          topology.kubernetes.io/zone: ap-northeast-2c
+  replicas: 1    # AZ당 1개 = 총 3개
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 2
+      memory: 4Gi
+  persistentVolume:
+    enabled: true
+    size: 50Gi
+    storageClass: gp3
+
+# ─────────────────────────────────────────────
+# Compactor — Sharding 활성화 시 2개 가능
+# ─────────────────────────────────────────────
+compactor:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 1
+      memory: 2Gi
+    limits:
+      cpu: 4
+      memory: 8Gi
+  persistentVolume:
+    enabled: true
+    size: 100Gi
+    storageClass: gp3
+
+# ─────────────────────────────────────────────
+# Ruler
+# ─────────────────────────────────────────────
+ruler:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 2Gi
+
+# ─────────────────────────────────────────────
+# Alertmanager — HA 모드 (3개 복제)
+# ─────────────────────────────────────────────
+alertmanager:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  persistentVolume:
+    enabled: true
+    size: 5Gi
+
+# ─────────────────────────────────────────────
+# Nginx Gateway — HA
+# ─────────────────────────────────────────────
+nginx:
+  enabled: true
+  replicas: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+# ─────────────────────────────────────────────
+# Memcached — 쿼리 결과 캐싱
+# ─────────────────────────────────────────────
+memcached:
+  enabled: true
+  replicas: 3
+  resources:
+    requests:
+      cpu: 200m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 4Gi

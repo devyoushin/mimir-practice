@@ -1,0 +1,123 @@
+# mimir-distributed Helm values (기본 설정)
+# 사용 전 S3 버킷 이름, 리전, IRSA ARN을 수정하세요.
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::<ACCOUNT_ID>:role/mimir-irsa-role
+
+mimir:
+  structuredConfig:
+    multitenancy_enabled: true
+
+    common:
+      storage:
+        backend: s3
+        s3:
+          region: ap-northeast-2
+          # EKS IRSA 사용 시 access_key/secret_key 불필요
+
+    blocks_storage:
+      s3:
+        bucket_name: my-mimir-blocks
+
+    ruler_storage:
+      s3:
+        bucket_name: my-mimir-ruler
+
+    ruler:
+      enable_api: true
+
+    alertmanager_storage:
+      s3:
+        bucket_name: my-mimir-alertmanager
+
+    alertmanager:
+      enable_api: true
+
+    limits:
+      ingestion_rate: 10000
+      ingestion_burst_size: 200000
+      max_label_names_per_series: 30
+      max_global_series_per_user: 1500000
+      compactor_blocks_retention_period: 30d
+
+    compactor:
+      block_ranges:
+        - 2h
+        - 12h
+        - 24h
+
+# 컴포넌트별 리소스 (개발/테스트용 최소 사양)
+distributor:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+ingester:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  persistentVolume:
+    enabled: true
+    size: 10Gi
+
+querier:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+query_frontend:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+store_gateway:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  persistentVolume:
+    enabled: true
+    size: 10Gi
+
+compactor:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  persistentVolume:
+    enabled: true
+    size: 20Gi
+
+ruler:
+  replicas: 1
+
+alertmanager:
+  replicas: 1
+  persistentVolume:
+    enabled: true
+    size: 1Gi
+
+# nginx gateway
+nginx:
+  enabled: true
+  replicas: 1

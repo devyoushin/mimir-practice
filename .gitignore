@@ -1,0 +1,23 @@
+# 개인 values 파일 (버킷 이름, ARN 포함)
+my-values.yaml
+*-local.yaml
+*.local.yaml
+
+# 임시 파일
+*.tmp
+*.bak
+.DS_Store
+
+# 민감 정보
+mimir-s3-policy.json
+alertmanager-config.yaml
+secrets/
+
+# 빌드/도구 바이너리
+mimirtool
+mimirtool-*
+
+# Terraform 상태 파일 (향후 확장 시)
+*.tfstate
+*.tfstate.backup
+.terraform/

@@ -1,0 +1,100 @@
+# Prometheus remote_write 설정 예시
+# 이 파일을 prometheus.yaml의 remote_write 섹션에 병합하거나
+# Helm values의 server.remoteWrite 로 전달하세요.
+
+# ─────────────────────────────────────────────
+# 기본 설정 (단일 테넌트)
+# ─────────────────────────────────────────────
+remote_write:
+  - url: http://mimir-nginx.monitoring.svc.cluster.local/api/v1/push
+    headers:
+      X-Scope-OrgID: default
+    queue_config:
+      capacity: 2500
+      max_shards: 200
+      min_shards: 1
+      max_samples_per_send: 10000
+      batch_send_deadline: 5s
+      min_backoff: 30ms
+      max_backoff: 5s
+    # WAL replay 중 백프레셔 방지
+    remote_timeout: 30s
+
+---
+# ─────────────────────────────────────────────
+# 멀티 테넌트: namespace 기준으로 분리 전송
+# ─────────────────────────────────────────────
+# remote_write:
+#   # team-a 네임스페이스의 메트릭 → team-a 테넌트
+#   - url: http://mimir-nginx.monitoring.svc.cluster.local/api/v1/push
+#     headers:
+#       X-Scope-OrgID: team-a
+#     write_relabel_configs:
+#       - source_labels: [namespace]
+#         regex: team-a(-.*)?
+#         action: keep
+#     queue_config:
+#       max_samples_per_send: 10000
+#       max_shards: 50
+#
+#   # team-b 네임스페이스의 메트릭 → team-b 테넌트
+#   - url: http://mimir-nginx.monitoring.svc.cluster.local/api/v1/push
+#     headers:
+#       X-Scope-OrgID: team-b
+#     write_relabel_configs:
+#       - source_labels: [namespace]
+#         regex: team-b(-.*)?
+#         action: keep
+#     queue_config:
+#       max_samples_per_send: 10000
+#       max_shards: 50
+
+---
+# ─────────────────────────────────────────────
+# Prometheus Agent 모드 (scrape-only, 경량화)
+# 장기 저장 없이 Mimir로만 전송하는 경우 권장
+# ─────────────────────────────────────────────
+# prometheus --enable-feature=agent
+# global:
+#   scrape_interval: 15s
+#   external_labels:
+#     cluster: my-eks-cluster
+#     environment: production
+#
+# scrape_configs:
+#   - job_name: kubernetes-pods
+#     kubernetes_sd_configs:
+#       - role: pod
+#     relabel_configs:
+#       - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+#         action: keep
+#         regex: "true"
+#
+# remote_write:
+#   - url: http://mimir-nginx.monitoring.svc.cluster.local/api/v1/push
+#     headers:
+#       X-Scope-OrgID: default
+#     queue_config:
+#       max_samples_per_send: 10000
+#       max_shards: 50
+
+---
+# ─────────────────────────────────────────────
+# Prometheus Helm chart values 방식 (참고)
+# ─────────────────────────────────────────────
+# helm install prometheus prometheus-community/prometheus \
+#   --namespace monitoring \
+#   --values - <<EOF
+# server:
+#   global:
+#     external_labels:
+#       cluster: my-eks-cluster
+#       environment: production
+#   remoteWrite:
+#     - url: http://mimir-nginx.monitoring.svc.cluster.local/api/v1/push
+#       headers:
+#         X-Scope-OrgID: default
+#       queueConfig:
+#         maxSamplesPerSend: 10000
+#         maxShards: 200
+# EOF
