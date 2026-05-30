@@ -21,3 +21,6 @@ mimirtool-*
 *.tfstate
 *.tfstate.backup
 .terraform/
+
+# Claude Code
+.claude/
