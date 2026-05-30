@@ -46,7 +46,7 @@ Zone-aware replication:
 ### 1. Ingester — Zone-aware
 
 ```yaml
-# helm/values-ha.yaml
+# ../ops/config/helm/values-ha.yaml
 ingester:
   zoneAwareReplication:
     enabled: true

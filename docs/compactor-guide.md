@@ -48,7 +48,7 @@ Day N:  retention 초과 → tombstone → 삭제
 ## 설정
 
 ```yaml
-# helm/values.yaml
+# ../ops/config/helm/values.yaml
 mimir:
   structuredConfig:
     compactor:

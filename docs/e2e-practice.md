@@ -26,7 +26,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 
 # values.yaml 복사 후 수정
-cp helm/values.yaml my-values.yaml
+cp ../ops/config/helm/values.yaml my-values.yaml
 
 # 필수 수정 항목:
 # 1. serviceAccount.annotations.eks.amazonaws.com/role-arn

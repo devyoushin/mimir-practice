@@ -56,7 +56,7 @@ helm search repo grafana/mimir-distributed --versions | head -10
 ## 4. Helm values 파일 준비
 
 ```bash
-cp helm/values.yaml my-values.yaml
+cp ../ops/config/helm/values.yaml my-values.yaml
 ```
 
 `my-values.yaml` 에서 반드시 수정할 항목:

@@ -172,7 +172,7 @@ kubectl get serviceaccount mimir -n monitoring -o yaml
 ## 4. Helm values에 S3 설정 반영
 
 ```yaml
-# helm/values.yaml
+# ../ops/config/helm/values.yaml
 serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::<ACCOUNT_ID>:role/mimir-irsa-role
