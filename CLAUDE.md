@@ -43,7 +43,7 @@ mimir-practice/
 
 | 문서 | 주제 |
 |------|------|
-| `docs/install.md` | Mimir 설치 (mimir-distributed Helm) |
+| `docs/install/install.md` | Mimir 설치 (mimir-distributed Helm) |
 | `docs/architecture-guide.md` | Mimir 아키텍처 (컴포넌트별 역할) |
 | `docs/multi-tenancy-guide.md` | 멀티 테넌시 설정 |
 | `docs/remote-write-guide.md` | Prometheus remote_write 연동 |
