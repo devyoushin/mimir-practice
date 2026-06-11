@@ -252,7 +252,7 @@ jobs:
         run: ./mimirtool rules load rules/*.yaml
 ```
 
-자세한 내용은 [gitops-guide.md](./gitops-guide.md) 참고.
+자세한 내용은 [gitops-guide.md](../delivery/gitops-guide.md) 참고.
 
 ---
 

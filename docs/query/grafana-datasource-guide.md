@@ -187,7 +187,7 @@ done
 
 > **주의**: 위 대시보드는 Mimir 자체를 모니터링하는 메타 모니터링용입니다.
 > Mimir가 자기 자신의 메트릭을 수집하도록 설정해야 합니다.
-> 자세한 내용은 [monitoring-guide.md](./monitoring-guide.md) 참고.
+> 자세한 내용은 [monitoring-guide.md](../operations/monitoring-guide.md) 참고.
 
 ---
 

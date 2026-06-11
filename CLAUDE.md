@@ -17,7 +17,17 @@ mimir-practice/
 ├── .claude/
 │   ├── settings.json
 │   └── commands/              # /new-doc, /new-runbook, /review-doc, /add-troubleshooting, /search-kb
-├── docs/                      # 주제별 가이드 문서, agents/rules/templates
+├── docs/
+│   ├── install/               # 설치와 업그레이드
+│   ├── architecture/          # 컴포넌트와 read/write path
+│   ├── storage/               # S3, IRSA, 블록 저장소
+│   ├── tenancy/               # 멀티 테넌시와 tenant limits
+│   ├── ingestion/             # Prometheus remote_write
+│   ├── query/                 # Grafana 데이터소스와 조회
+│   ├── rules-alerting/        # Recording Rules, Alerting
+│   ├── operations/            # Compactor, HA, monitoring, troubleshooting
+│   ├── delivery/              # GitOps 기반 규칙 관리
+│   ├── tutorials/             # End-to-End 실습
 │   ├── agents/                # doc-writer, capacity-planner, multi-tenancy-advisor, troubleshooter
 │   ├── templates/             # service-doc, runbook, incident-report
 │   └── rules/                 # doc-writing, mimir-conventions, security-checklist, monitoring
@@ -33,7 +43,7 @@ mimir-practice/
 |--------|------|---------|
 | `/new-doc` | 새 가이드 문서 생성 | `/new-doc ruler-alertmanager-integration` |
 | `/new-runbook` | 새 런북 생성 | `/new-runbook Mimir Ingester 장애 대응` |
-| `/review-doc` | 문서 검토 | `/review-doc docs/multi-tenancy-guide.md` |
+| `/review-doc` | 문서 검토 | `/review-doc docs/tenancy/multi-tenancy-guide.md` |
 | `/add-troubleshooting` | 트러블슈팅 케이스 추가 | `/add-troubleshooting 수집 제한 초과` |
 | `/search-kb` | 지식베이스 검색 | `/search-kb Mimir 카디널리티 제한` |
 
@@ -44,19 +54,19 @@ mimir-practice/
 | 문서 | 주제 |
 |------|------|
 | `docs/install/install.md` | Mimir 설치 (mimir-distributed Helm) |
-| `docs/architecture-guide.md` | Mimir 아키텍처 (컴포넌트별 역할) |
-| `docs/multi-tenancy-guide.md` | 멀티 테넌시 설정 |
-| `docs/remote-write-guide.md` | Prometheus remote_write 연동 |
-| `docs/recording-rules-guide.md` | Recording Rule 설정 |
-| `docs/alerting-guide.md` | Ruler + Alertmanager 알림 |
-| `docs/storage-guide.md` | S3 스토리지 구성 |
-| `docs/compactor-guide.md` | Compactor 운영 |
-| `docs/grafana-datasource-guide.md` | Grafana 데이터소스 설정 |
-| `docs/ha-guide.md` | 고가용성 구성 |
-| `docs/monitoring-guide.md` | Mimir 자체 모니터링 |
-| `docs/troubleshooting-guide.md` | 트러블슈팅 |
-| `docs/e2e-practice.md` | 엔드투엔드 실습 |
-| `docs/gitops-guide.md` | GitOps 기반 운영 |
+| `docs/architecture/architecture-guide.md` | Mimir 아키텍처 (컴포넌트별 역할) |
+| `docs/tenancy/multi-tenancy-guide.md` | 멀티 테넌시 설정 |
+| `docs/ingestion/remote-write-guide.md` | Prometheus remote_write 연동 |
+| `docs/rules-alerting/recording-rules-guide.md` | Recording Rule 설정 |
+| `docs/rules-alerting/alerting-guide.md` | Ruler + Alertmanager 알림 |
+| `docs/storage/storage-guide.md` | S3 스토리지 구성 |
+| `docs/operations/compactor-guide.md` | Compactor 운영 |
+| `docs/query/grafana-datasource-guide.md` | Grafana 데이터소스 설정 |
+| `docs/operations/ha-guide.md` | 고가용성 구성 |
+| `docs/operations/monitoring-guide.md` | Mimir 자체 모니터링 |
+| `docs/operations/troubleshooting-guide.md` | 트러블슈팅 |
+| `docs/tutorials/e2e-practice.md` | 엔드투엔드 실습 |
+| `docs/delivery/gitops-guide.md` | GitOps 기반 운영 |
 
 ---
 

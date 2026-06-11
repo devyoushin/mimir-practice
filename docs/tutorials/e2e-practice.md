@@ -9,8 +9,8 @@
 - [ ] EKS 클러스터 접속 확인: `kubectl get nodes`
 - [ ] AWS CLI 설정 확인: `aws sts get-caller-identity`
 - [ ] Helm 설치 확인: `helm version`
-- [ ] S3 버킷 3개 생성 완료 ([storage-guide.md](./storage-guide.md) 참고)
-- [ ] IRSA 설정 완료 ([storage-guide.md](./storage-guide.md) 참고)
+- [ ] S3 버킷 3개 생성 완료 ([storage-guide.md](../storage/storage-guide.md) 참고)
+- [ ] IRSA 설정 완료 ([storage-guide.md](../storage/storage-guide.md) 참고)
 
 ---
 
@@ -26,7 +26,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 
 # values.yaml 복사 후 수정
-cp ../ops/config/helm/values.yaml my-values.yaml
+cp ../../ops/config/helm/values.yaml my-values.yaml
 
 # 필수 수정 항목:
 # 1. serviceAccount.annotations.eks.amazonaws.com/role-arn
@@ -346,4 +346,4 @@ pkill -f "kubectl port-forward"
 | Step 5 | "Data source not responding" | mimir-nginx 서비스 이름/네임스페이스 확인 |
 | Step 6 | Recording Rule 결과 없음 | 1분 대기 후 재시도 |
 
-더 자세한 문제 해결은 [troubleshooting-guide.md](./troubleshooting-guide.md) 참고.
+더 자세한 문제 해결은 [troubleshooting-guide.md](../operations/troubleshooting-guide.md) 참고.
