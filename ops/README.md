@@ -13,13 +13,13 @@ Mimir를 실제로 설치하거나 실습할 때 사용하는 Helm values와 Pro
 
 | 작업 | 문서 |
 |------|------|
-| 설치 방식 선택 | [../docs/install/install.md](../docs/install/install.md) |
-| Helm 설치 | [../docs/install/install-helm.md](../docs/install/install-helm.md) |
-| 스토리지 구성 | [../docs/storage/storage-guide.md](../docs/storage/storage-guide.md) |
-| Remote Write 설정 | [../docs/ingestion/remote-write-guide.md](../docs/ingestion/remote-write-guide.md) |
-| Grafana 조회 | [../docs/query/grafana-datasource-guide.md](../docs/query/grafana-datasource-guide.md) |
-| End-to-End 실습 | [../docs/tutorials/e2e-practice.md](../docs/tutorials/e2e-practice.md) |
-| 운영 진단 | [../docs/operations/troubleshooting-guide.md](../docs/operations/troubleshooting-guide.md) |
+| 설치 방식 선택 | [../docs/01-installation/install.md](../docs/01-installation/install.md) |
+| Helm 설치 | [../docs/01-installation/install-helm.md](../docs/01-installation/install-helm.md) |
+| 스토리지 구성 | [../docs/04-storage/storage-guide.md](../docs/04-storage/storage-guide.md) |
+| Remote Write 설정 | [../docs/03-ingestion/remote-write-guide.md](../docs/03-ingestion/remote-write-guide.md) |
+| Grafana 조회 | [../docs/05-query/grafana-datasource-guide.md](../docs/05-query/grafana-datasource-guide.md) |
+| End-to-End 실습 | [../docs/10-tutorials/e2e-practice.md](../docs/10-tutorials/e2e-practice.md) |
+| 운영 진단 | [../docs/09-operations/troubleshooting-guide.md](../docs/09-operations/troubleshooting-guide.md) |
 
 ## 관리 원칙
 

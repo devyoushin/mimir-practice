@@ -21,5 +21,5 @@
 ## 관련 문서
 
 - `../README.md`
-- `../rules/README.md`
-- `../templates/README.md`
+- `../90-standards/README.md`
+- `../91-templates/README.md`

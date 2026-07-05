@@ -10,5 +10,5 @@ Mimir rules와 Alertmanager 설정을 GitOps 방식으로 관리하는 문서를
 
 ## 관련 문서
 
-- [../rules-alerting/recording-rules-guide.md](../rules-alerting/recording-rules-guide.md)
-- [../rules-alerting/alerting-guide.md](../rules-alerting/alerting-guide.md)
+- [../06-rules-alerting/recording-rules-guide.md](../06-rules-alerting/recording-rules-guide.md)
+- [../06-rules-alerting/alerting-guide.md](../06-rules-alerting/alerting-guide.md)

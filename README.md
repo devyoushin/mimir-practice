@@ -7,27 +7,27 @@ EKS 환경에서 Grafana Mimir Distributed 기반 장기 메트릭 저장소, re
 | 목적 | 문서 |
 |------|------|
 | 전체 문서 목차 보기 | [docs/README.md](docs/README.md) |
-| Mimir 설치하기 | [docs/install/install.md](docs/install/install.md) |
-| 아키텍처 이해하기 | [docs/architecture/architecture-guide.md](docs/architecture/architecture-guide.md) |
-| S3/IRSA 스토리지 구성하기 | [docs/storage/storage-guide.md](docs/storage/storage-guide.md) |
-| 멀티 테넌시 이해하기 | [docs/tenancy/multi-tenancy-guide.md](docs/tenancy/multi-tenancy-guide.md) |
-| Prometheus remote write 연결하기 | [docs/ingestion/remote-write-guide.md](docs/ingestion/remote-write-guide.md) |
-| Grafana에서 조회하기 | [docs/query/grafana-datasource-guide.md](docs/query/grafana-datasource-guide.md) |
-| End-to-End 실습하기 | [docs/tutorials/e2e-practice.md](docs/tutorials/e2e-practice.md) |
+| Mimir 설치하기 | [docs/01-installation/install.md](docs/01-installation/install.md) |
+| 아키텍처 이해하기 | [docs/02-architecture/architecture-guide.md](docs/02-architecture/architecture-guide.md) |
+| S3/IRSA 스토리지 구성하기 | [docs/04-storage/storage-guide.md](docs/04-storage/storage-guide.md) |
+| 멀티 테넌시 이해하기 | [docs/07-tenancy/multi-tenancy-guide.md](docs/07-tenancy/multi-tenancy-guide.md) |
+| Prometheus remote write 연결하기 | [docs/03-ingestion/remote-write-guide.md](docs/03-ingestion/remote-write-guide.md) |
+| Grafana에서 조회하기 | [docs/05-query/grafana-datasource-guide.md](docs/05-query/grafana-datasource-guide.md) |
+| End-to-End 실습하기 | [docs/10-tutorials/e2e-practice.md](docs/10-tutorials/e2e-practice.md) |
 | 운영 YAML 확인하기 | [ops/README.md](ops/README.md) |
 
 ## 추천 학습 순서
 
-1. [Mimir 설치](docs/install/install.md)
-2. [아키텍처](docs/architecture/architecture-guide.md)
-3. [스토리지](docs/storage/storage-guide.md)
-4. [멀티 테넌시](docs/tenancy/multi-tenancy-guide.md)
-5. [Remote Write](docs/ingestion/remote-write-guide.md)
-6. [Grafana 데이터소스](docs/query/grafana-datasource-guide.md)
-7. [Recording Rules](docs/rules-alerting/recording-rules-guide.md), [Alerting](docs/rules-alerting/alerting-guide.md)
-8. [Compactor](docs/operations/compactor-guide.md), [HA](docs/operations/ha-guide.md), [Monitoring](docs/operations/monitoring-guide.md)
-9. [GitOps](docs/delivery/gitops-guide.md), [End-to-End 실습](docs/tutorials/e2e-practice.md)
-10. [트러블슈팅](docs/operations/troubleshooting-guide.md)
+1. [Mimir 설치](docs/01-installation/install.md)
+2. [아키텍처](docs/02-architecture/architecture-guide.md)
+3. [스토리지](docs/04-storage/storage-guide.md)
+4. [멀티 테넌시](docs/07-tenancy/multi-tenancy-guide.md)
+5. [Remote Write](docs/03-ingestion/remote-write-guide.md)
+6. [Grafana 데이터소스](docs/05-query/grafana-datasource-guide.md)
+7. [Recording Rules](docs/06-rules-alerting/recording-rules-guide.md), [Alerting](docs/06-rules-alerting/alerting-guide.md)
+8. [Compactor](docs/09-operations/compactor-guide.md), [HA](docs/09-operations/ha-guide.md), [Monitoring](docs/09-operations/monitoring-guide.md)
+9. [GitOps](docs/08-delivery/gitops-guide.md), [End-to-End 실습](docs/10-tutorials/e2e-practice.md)
+10. [트러블슈팅](docs/09-operations/troubleshooting-guide.md)
 
 ## 디렉터리 구조
 

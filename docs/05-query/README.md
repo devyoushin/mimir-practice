@@ -10,6 +10,6 @@ Grafana에서 Mimir를 Prometheus-compatible 데이터소스로 연결하고 조
 
 ## 관련 문서
 
-- [../tenancy/multi-tenancy-guide.md](../tenancy/multi-tenancy-guide.md)
-- [../rules-alerting/recording-rules-guide.md](../rules-alerting/recording-rules-guide.md)
-- [../operations/monitoring-guide.md](../operations/monitoring-guide.md)
+- [../07-tenancy/multi-tenancy-guide.md](../07-tenancy/multi-tenancy-guide.md)
+- [../06-rules-alerting/recording-rules-guide.md](../06-rules-alerting/recording-rules-guide.md)
+- [../09-operations/monitoring-guide.md](../09-operations/monitoring-guide.md)

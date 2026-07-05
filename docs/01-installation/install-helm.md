@@ -15,7 +15,7 @@ helm repo update
 
 ## 선행 조건
 
-- [../storage/storage-guide.md](../storage/storage-guide.md) 먼저 완료
+- [../04-storage/storage-guide.md](../04-storage/storage-guide.md) 먼저 완료
 - blocks / ruler / alertmanager S3 버킷과 IRSA 필요
 
 ## 설치

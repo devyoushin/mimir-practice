@@ -11,6 +11,6 @@ Mimir Ruler, Recording Rules, Alerting Rules, Alertmanager 설정 문서를 모�
 
 ## 관련 문서
 
-- [../delivery/gitops-guide.md](../delivery/gitops-guide.md)
-- [../operations/monitoring-guide.md](../operations/monitoring-guide.md)
-- [../templates/runbook.md](../templates/runbook.md)
+- [../08-delivery/gitops-guide.md](../08-delivery/gitops-guide.md)
+- [../09-operations/monitoring-guide.md](../09-operations/monitoring-guide.md)
+- [../91-templates/runbook.md](../91-templates/runbook.md)

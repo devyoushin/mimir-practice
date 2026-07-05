@@ -18,5 +18,5 @@
 
 ## 관련 문서
 
-- `../rules/README.md`
-- `../agents/README.md`
+- `../90-standards/README.md`
+- `../99-agents/README.md`

@@ -10,9 +10,9 @@ Prometheus에서 Mimir로 메트릭을 전송하고 Grafana에서 조회하는 E
 
 ## 사전 학습
 
-1. [../install/install.md](../install/install.md)
-2. [../storage/storage-guide.md](../storage/storage-guide.md)
-3. [../ingestion/remote-write-guide.md](../ingestion/remote-write-guide.md)
+1. [../01-installation/install.md](../01-installation/install.md)
+2. [../04-storage/storage-guide.md](../04-storage/storage-guide.md)
+3. [../03-ingestion/remote-write-guide.md](../03-ingestion/remote-write-guide.md)
 
 ## 관련 경로
 
